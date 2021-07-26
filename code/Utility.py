@@ -6,7 +6,7 @@
 """
 
 import numpy as np
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 import os
 import pickle
 from keras.preprocessing.image import ImageDataGenerator
