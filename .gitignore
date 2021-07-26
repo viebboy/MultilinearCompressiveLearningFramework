@@ -1,3 +1,12 @@
 code/*.pyc
 code/__pycache__
+*.py[cod]
+*$py.class
+
+# Editors
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
 
