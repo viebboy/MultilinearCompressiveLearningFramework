@@ -4,9 +4,10 @@
 @Author: Dat Tran
 @Email: viebboy@gmail.com, dat.tranthanh@tut.fi, thanh.tran@tuni.fi
 """
+import math
 
 import numpy as np
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 import os
 import pickle
 from keras.preprocessing.image import ImageDataGenerator
@@ -25,9 +26,21 @@ def create_configuration(hyperparameter_list, value_list):
         configurations += list(itertools.product(*v_list))
    
     configurations = list(set(configurations))
-    configurations.sort()
+    configurations.sort(key=getSortableKey)
     return configurations
 
+def getSortableKey(x):
+    sortKey = []
+    for element in x:
+        # To avoid tuples with NoneType elements causing error while sorting
+        if isinstance(element, tuple):
+            theTuple = element;
+            nonesRemoved = [-1 * math.inf if item is None else item for item in theTuple]
+            sortKey.append(tuple(nonesRemoved));
+        else:
+            sortKey.append(element);
+
+    return sortKey
 
 def flatten(data, mode):
     
