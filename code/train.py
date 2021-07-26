@@ -19,17 +19,16 @@ def save_result(output, path):
     fid.close()
 
 def main(argv):
-
     try:
-      opts, args = getopt.getopt(argv,"h", ['index=' ])
-    
+        opts, args = getopt.getopt(argv, "h", ['index='])
+
     except getopt.GetoptError:
         sys.exit(2)
-    
-    for opt, arg in opts:             
+
+    for opt, arg in opts:
         if opt == '--index':
             index = int(arg)
-    
+
     baseline_configurations = Utility.create_configuration([Conf.baseline_var_names], [Conf.conf_baseline])
     experiment_configurations = Utility.create_configuration([Conf.hyperparameters]*5, 
                                                    [Conf.conf_vector,
@@ -47,13 +46,15 @@ def main(argv):
         output = Runners.train_baseline(baseline_configurations[index])
         filename = '_'.join([str(v) for v in baseline_configurations[index]]) + '.pickle'
         filename = os.path.join(Conf.BASELINE_DIR, filename)
-        
+
     else:
-        output = Runners.train_sensing(experiment_configurations[index-len(baseline_configurations)])
-        filename = '_'.join([str(v) for v in experiment_configurations[index-len(baseline_configurations)]]) + '.pickle'
+        output = Runners.train_sensing(experiment_configurations[index - len(baseline_configurations)])
+        filename = '_'.join(
+            [str(v) for v in experiment_configurations[index - len(baseline_configurations)]]) + '.pickle'
         filename = os.path.join(Conf.OUTPUT_DIR, filename)
-        
+
     save_result(output, filename)
-    
+
+
 if __name__ == "__main__":
     main(sys.argv[1:])
